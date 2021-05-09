@@ -1,0 +1,2 @@
+Fseek é utilizado para fazer buscas e acessos de modo aleatórios nos arquivos.
+é mais fácil utiliza-lo em arquivos binários devido a sua movimentação ser feitas por bytes

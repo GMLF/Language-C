@@ -1,0 +1,2 @@
+fwrite é mais vantajoso, visando que de acordo com a estrutura do fwrite você consegue salvar um bloco de dados
+sem a a utilização de um for, sem utilizar várias vezes o fprintf pra salvar os elementos da struct.
