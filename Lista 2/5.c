@@ -3,107 +3,152 @@
 #include <string.h>
 
 typedef struct{
-char nome[100],endereco[100],data[10];
+char nome[100];
+char endereco[100];
+char data[20];
 }Cadastro;
 
-void Cadastra_cliente(FILE *adiciona,Cadastro *cliente){
-  //abrindo arquivo no formato append, para dicionar apartir do ultimo elemento
-  adiciona=fopen("5.txt","a+");
+Cadastro *Memoria(int quantidade, Cadastro *cliente){
+  //ponteiro auxiliar
+  Cadastro *aux;
+    //alocando a memória para a quantidade informada
+    aux=malloc(quantidade*sizeof(Cadastro));
+  //retornando o ponteiro alocado para a quantidade de clientes
+  return aux;
+}//Memoria
 
-  if(adiciona==NULL){
-    printf("erro ao abrir o aidiciona_clienteuivo\n");
-    system("pause");
-    exit(1);
-  }//verificando se abriu o arquivo
+void Adicionar_cliente(Cadastro *cliente, int quantidade){
+
+//criando arquivo
+FILE*arq;
+//abrindo o arquivo em modo escrita binária
+arq=fopen("5.txt","wb");
+    //validando abertura
+    if(arq==NULL){
+      printf("Erro ao abrir\n");
+      exit(1);
+    }//if
+    if(quantidade==0){
+      printf("Impossivel cadatrar 0 clientes\n");
+    }//if
+
+  printf("---------------------------------------\n");
+  //for preenchendo a quantidade de cliente informado pelo usuário
+  for(int i=0;i<quantidade;i++){
+    setbuf(stdin,NULL);
+    printf("Digite o nome do [%d] cliente: ",i+1);
+    setbuf(stdin,NULL);
+    fgets(cliente[i].nome,99,stdin);
+    cliente[i].nome[strcspn(cliente[i].nome,"\n")]='\0';
+
+    printf("Digite o endereco do [%d] cliente: ",i+1);
+    setbuf(stdin,NULL);
+    fgets(cliente[i].endereco,99,stdin);
+    cliente[i].endereco[strcspn(cliente[i].endereco,"\n")]='\0';
+
+
+    printf("Digite a data do [%d] cliente: ",i+1);
+    setbuf(stdin,NULL);
+    fgets(cliente[i].data,19,stdin);
+    cliente[i].data[strcspn(cliente[i].data,"\n")]='\0';
+    printf("\n");
+  }//for
+    printf("---------------------------------------\n");
+  //gravando no arquivo em modo binario
+  fwrite(cliente,sizeof(Cadastro),quantidade,arq);
+  //fechando o arquivo
+  fclose(arq);
+}//adicionar cliente
+
+void Altera(Cadastro *cliente,int quantidade){
+    //váriaveis
+    int posicao=0;
+      //criand oarquivo
+      FILE *arq;
+
+      arq=fopen("5.txt","rb");
+        //validando
+        if(arq==NULL){
+          printf("erro ao abrir\n");
+          return;
+        }
+          //solicitando a posicao que quer alterar
+          printf("Digite a posicao do cliente que deseja alterar: ");
+          scanf("%d",&posicao);
+    printf("---------------------------------------\n");
+        if(posicao>=quantidade){
+        printf("\nA posicao informada, nao foi encontrada\n");
+    printf("---------------------------------------\n");
+        }  if(quantidade==0){
+            printf("\nNao possui clientes cadastrados\n");
+          }//if
 else{
-    setbuf(stdin,NULL);
-    printf("Digite o nome do cliente: ");
-    fgets(cliente->nome,99,stdin);
-    setbuf(stdin,NULL);
-    cliente->nome[strcspn(cliente->nome,"\n")]='\0';
+        fread(cliente,sizeof(Cadastro),quantidade,arq);
 
-    printf("Digite o endeco do cliente: ");
-    fgets(cliente->endereco,99,stdin);
-    setbuf(stdin,NULL);
-    cliente->endereco[strcspn(cliente->endereco,"\n")]='\0';
+    printf("---------------------------------------\n");
+    //for preenchendo a quantidade de cliente informado pelo usuário
 
-    printf("Digite a data do cadastro: ");
-    fgets(cliente->data,9,stdin);
-    setbuf(stdin,NULL);
-    cliente->data[strcspn(cliente->data,"\n")]='\0';
+      setbuf(stdin,NULL);
+      printf("Digite o nome do cliente: ");
+      setbuf(stdin,NULL);
+      fgets(cliente[posicao].nome,99,stdin);
+      cliente[posicao].nome[strcspn(cliente[posicao].nome,"\n")]='\0';
 
-fwrite(cliente, sizeof(Cadastro), 1, adiciona);
+      printf("Digite o endereco do cliente: ");
+      setbuf(stdin,NULL);
+      fgets(cliente[posicao].endereco,99,stdin);
+      cliente[posicao].endereco[strcspn(cliente[posicao].endereco,"\n")]='\0';
 
+
+      printf("Digite a data do cliente: ");
+      setbuf(stdin,NULL);
+      fgets(cliente[posicao].data,19,stdin);
+      cliente[posicao].data[strcspn(cliente[posicao].data,"\n")]='\0';
+      printf("\n");
 }//else
- //fechando arquivo
- fclose(adiciona);
-}//Cadastra_cliente;
+      fwrite(cliente,sizeof(Cadastro),quantidade,arq);
+      printf("---------------------------------------\n");
 
-void Altera_cadastro(FILE* altera, Cadastro *cliente){
-int posicao=0;
-char a[100];
- //abrindo o arquivo
- altera=fopen("5.txt","rb");
-  //verificando
-  if(altera==NULL){
-    printf("Nao existem clientes cadastrados\n");
-    exit(1);
-  }else{
-    printf("Digite a posicao do cliente a qual deseja alterar o cadastro: ");
-    scanf("%d",&posicao);
+      for(int i=0;i<quantidade;i++){
+        printf("[%s]\n idade:[%d]\n telefone:[%s]\n\n",cliente[i].nome,cliente[i].endereco,cliente[i].data);
+      }//for
+      printf("------------------------------------------\n");
 
-    fseek(altera, posicao*sizeof(Cadastro), SEEK_SET);
-
-    printf("Atualizando os dados\n");
-    printf("Digite o novo nome do cliente: ");
-    setbuf(stdin,NULL);
-    fgets(cliente->nome,99,stdin);
-    cliente->nome[strcspn(cliente->nome,"\n")]='\0';
-
-    printf("Digite o novo endereco do cliente: ");
-    setbuf(stdin,NULL);
-    fgets(cliente->endereco,99,stdin);
-    cliente->endereco[strcspn(cliente->endereco,"\n")]='\0';
-
-    printf("Digite a data da atualizacao do cadastro: ");
-    setbuf(stdin,NULL);
-    fgets(cliente->data,99,stdin);
-    cliente->data[strcspn(cliente->data,"\n")]='\0';
-
-    fwrite(cliente, sizeof(Cadastro), 1, altera);
-
-    while(!feof(altera)){
-      fgets(a,99,altera);
-      printf("%s",a);
-    }
-  }//else
-fclose(altera);
-}//Altera_cadastro
+fclose(arq);
+}//Altera
 
 int main(){
-  //Váriaveis
-  Cadastro cliente;
-  int opcao=0;
-        FILE *arq;
-printf("1 - Adicionar cliente\n2 - Alterar informacoes do cliente\n3 - Imprimir informacoes ou remover um cliente\n\nDigite sua opcao: ");
-scanf("%d",&opcao);
-  //opcao
-  switch(opcao){
-    //opcao 1
-    case 1:
-      Cadastra_cliente(arq,&cliente);
-    break;
-    //opcao 2
-    case 2:
-      Altera_cadastro(arq,&cliente);
-    break;
-    //opcao 3
-    case 3:
+  //váriaveis
+  int opcao=0,quantidade=0;
+  Cadastro *cliente;
 
-    break;
-    //default
-    default:
-    printf("opcao invalida\n");
-    break;
-  }//switch
+do{
+  //menu
+  printf("          Menu\n");
+  printf("1 - Adicionar informacoes dos clientes\n2 - Alterar informacoes de um cliente\n3 - Imprimir ou remover informacoes do cliente\n");
+  //recebendo opcao do usuario
+  printf("Digite a opcao: ");
+  scanf("%d",&opcao);
+      //opcoes do menu
+      switch(opcao){
+          case 1:
+            printf("\n---------------------------------------\n");
+          printf("Digite a quantidade de clientes que deseja cadastrar: ");
+          scanf("%d",&quantidade);
+          //chamando função para alocar a memória para a quantidade de cliente
+          cliente=Memoria(quantidade,cliente);
+          //chamando função para cadastrar
+          Adicionar_cliente(cliente,quantidade);
+          break;
+
+          case 2:
+              printf("\n---------------------------------------\n");
+              Altera(cliente,quantidade);
+
+          break;
+
+      }//switch
+}while(opcao!=5);
+free(cliente);
+  return 0;
 }
