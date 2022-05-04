@@ -24,11 +24,11 @@ Reagentes* Memoria(int tam){
 void Preenche_produto(Produtos *produto){
     setbuf(stdin,NULL);
       printf("Digite o nome do produto: ");
-        fgets(produto->nome,99,stdin);
-          produto->nome[strcspn(produto->nome,"\n")]='\0';
+      fgets(produto->nome,99,stdin);
+       produto->nome[strcspn(produto->nome,"\n")]='\0';
 
       printf("Digite a energia do produto: ");
-        scanf("%f",&produto->energia);
+      scanf("%f",&produto->energia);
   }//Preenche_produto
 
 //Função recursiva para salvar os reagentes na struct
@@ -67,13 +67,14 @@ float Entalpia_reagentes(Reagentes *aux,int tam){
         for(int i=0;i<tam;i++){
          //calculando a entalpia dos reagente
           soma+=aux[i].energia;
-         }//for
+        }//for
 
           //retornando o seu respectivo valor para a main
           return soma;
   }//Entalpia_reagentes
 
 float Calcula(int tam,Produtos *produto,float total_energia ){
+ 
         //váriavel auxiliar para o cálculo
         float resultado=0;
         //realizando o cálculo
@@ -83,6 +84,7 @@ float Calcula(int tam,Produtos *produto,float total_energia ){
   }//Calcula
 
 void Escrevendo(FILE* escrita,float resultado){
+  
   //criando o arquivo com o formato de escrita
   escrita=fopen("resultado.txt","w");
     //validação se o arquivo é nulo
@@ -129,6 +131,7 @@ int main(){
   //váriaveis
   int qtd_reagentes=0,aux2=0;
   float total_energia=0,resultado=0,aux=0;
+  
        //informando quantidade de reagentes;
        printf("Digite a quantidade de reagentes: ");
        scanf("%d",&qtd_reagentes);
@@ -159,6 +162,7 @@ int main(){
 
  //liberando a memória para não ocorrer vazamento de memória
  free(elementos_reagentes);
+  
 //retornando que o código compilou sem erros.
 return 0;
 }//main
