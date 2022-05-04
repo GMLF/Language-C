@@ -126,35 +126,36 @@ fclose(leitura);
 }//Lendo
 
 int main(){
-    //váriaveis
+  //váriaveis
   int qtd_reagentes=0,aux2=0;
   float total_energia=0,resultado=0,aux=0;
-    //informando quantidade de reagentes;
-    printf("Digite a quantidade de reagentes: ");
-    scanf("%d",&qtd_reagentes);
-      printf("\n");
+       //informando quantidade de reagentes;
+       printf("Digite a quantidade de reagentes: ");
+       scanf("%d",&qtd_reagentes);
+       printf("\n");
+  
         //Váriavel da struct dos reagentes com ponteiro para alocar dinamicamente a memória
-          Reagentes *elementos_reagentes;
-              //Chamando a função para alocar dinamicamente a memória
-              elementos_reagentes=Memoria(qtd_reagentes);
-                //Struct dos produtos
-                Produtos  elemento_produto;
-                  //Chamando a função para preencher a struct produto
-                  Preenche_produto(&elemento_produto);
-                    //Chamando a função para preencher os produtos
-                    Preenche_reagentes(elementos_reagentes,qtd_reagentes,aux2);
-                      //Calculando a entalpia dos Reagentes e salvando o retorno em uma váriavel
-                      total_energia=Entalpia_reagentes(elementos_reagentes,qtd_reagentes);
-                      //Chamando função para calcular a entalpia geral
-                      resultado=Calcula(qtd_reagentes,&elemento_produto,total_energia);
-                      //abrindo o arquivo
-                      FILE *escrita;
-                    //Função que escreve no arquivo
-                    Escrevendo(escrita,resultado);
-                  //abrindo o arquivo
-                  FILE *leitura;
-                //Função que lê o arquivo
-                Lendo(leitura);
+        Reagentes *elementos_reagentes;
+        //Chamando a função para alocar dinamicamente a memória
+        elementos_reagentes=Memoria(qtd_reagentes);
+        //Struct dos produtos
+        Produtos  elemento_produto;
+        //Chamando a função para preencher a struct produto
+        Preenche_produto(&elemento_produto);
+        //Chamando a função para preencher os produtos
+        Preenche_reagentes(elementos_reagentes,qtd_reagentes,aux2);
+        //Calculando a entalpia dos Reagentes e salvando o retorno em uma váriavel
+        total_energia=Entalpia_reagentes(elementos_reagentes,qtd_reagentes);
+        //Chamando função para calcular a entalpia geral
+        resultado=Calcula(qtd_reagentes,&elemento_produto,total_energia);
+        //abrindo o arquivo
+        FILE *escrita;
+        //Função que escreve no arquivo
+        Escrevendo(escrita,resultado);
+        //abrindo o arquivo
+        FILE *leitura;
+        //Função que lê o arquivo
+        Lendo(leitura);
 
  //liberando a memória para não ocorrer vazamento de memória
  free(elementos_reagentes);
