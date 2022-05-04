@@ -16,9 +16,9 @@ Reagentes* Memoria(int tam){
     //Ponteiro para apontar pro espaço alocado
     Reagentes *p;
     //Alocando dinamicamenteo espaço para a quantidade de reagente
-        p=malloc(tam*sizeof(Reagentes));
-        //retornando o ponteiro que aponta pro local do espaço alocado
-      return p;
+    p=malloc(tam*sizeof(Reagentes));
+    //retornando o ponteiro que aponta pro local do espaço alocado
+    return p;
 }//Memoria
 
 void Preenche_produto(Produtos *produto){
@@ -39,47 +39,47 @@ void Preenche_reagentes(Reagentes * reagente,int tam,int aux){
 
       //limpando buffer
       setbuf(stdin,NULL);
-        //pulando linha
-        printf("\n");
-          //solicitando o nome do reagente e salvando na struct
-          printf("Digite o nome do [%d] reagente: ",aux+1);
-            //limitando a quantidade de caracter
-            fgets(reagente[aux].nome,99,stdin);
-              //corrigindo o espaço para cracter nulo
-              reagente[aux].nome[strcspn(reagente[aux].nome,"\n")]='\0';
-                //limpando buffer
-                setbuf(stdin,NULL);
+      //pulando linha
+      printf("\n");
+      //solicitando o nome do reagente e salvando na struct
+      printf("Digite o nome do [%d] reagente: ",aux+1);
+      //limitando a quantidade de caracter
+      fgets(reagente[aux].nome,99,stdin);
+      //corrigindo o espaço para cracter nulo
+      reagente[aux].nome[strcspn(reagente[aux].nome,"\n")]='\0';
+      //limpando buffer
+      setbuf(stdin,NULL);
 
         //solicitando a quantidade de energia e salvando na struct
         printf("Digite a energia do [%d] reagente: ",aux+1);
-          scanf("%f",&reagente[aux].energia);
-              //limpando buffer
-              setbuf(stdin,NULL);
-//chamando recursão
-Preenche_reagentes(reagente,tam,aux+1);
+        scanf("%f",&reagente[aux].energia);
+        //limpando buffer
+        setbuf(stdin,NULL);
+        //chamando recursão
+        Preenche_reagentes(reagente,tam,aux+1);
     }//else
   }//Preenche_reagentes
 
 float Entalpia_reagentes(Reagentes *aux,int tam){
         //váriavel para armazenar a entalpia dos reagentes
-          float soma=0;
-            //for para variar o índice
-              for(int i=0;i<tam;i++){
-                //calculando a entalpia dos reagente
-                  soma+=aux[i].energia;
-              }//for
+        float soma=0;
+        //for para variar o índice
+        for(int i=0;i<tam;i++){
+         //calculando a entalpia dos reagente
+          soma+=aux[i].energia;
+         }//for
 
           //retornando o seu respectivo valor para a main
           return soma;
   }//Entalpia_reagentes
 
 float Calcula(int tam,Produtos *produto,float total_energia ){
-          //váriavel auxiliar para o cálculo
-          float resultado=0;
-            //realizando o cálculo
-            resultado=produto->energia-total_energia;
-            //retornando o resultado
-            return resultado;
+        //váriavel auxiliar para o cálculo
+        float resultado=0;
+        //realizando o cálculo
+        resultado=produto->energia-total_energia;
+        //retornando o resultado
+        return resultado;
   }//Calcula
 
 void Escrevendo(FILE* escrita,float resultado){
